@@ -1,4 +1,4 @@
-# **Projeto de Infraestrutura como Código (IaC)**
+# **Projeto SRE - Terraform**
 
 ## **Descrição**
 

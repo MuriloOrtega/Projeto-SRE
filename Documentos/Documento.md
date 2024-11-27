@@ -86,8 +86,9 @@ Exemplo de resposta da commandLambda:
   "statusCode": 200,
   "body": "\"Comando recebido e enfileirado com sucesso\""
 }
-Processamento Posterior (Opcional)
 ```
+
+Processamento Posterior (Opcional)
 
 Caso exista um consumidor para a fila SQS (por exemplo, outra função Lambda), ele processará as mensagens enfileiradas.
 Fluxo Completo
@@ -95,9 +96,13 @@ Requisição Inicial
 O cliente envia uma solicitação ao API Gateway.
 Processamento pela Função Lambda
 Dependendo do endpoint, o API Gateway invoca a função Lambda correta:
+
 queryLambda: Processa a consulta e retorna a resposta.
+
 commandLambda: Processa o comando e, se necessário, interage com a SQS.
-Interação com a SQS
+
+**Interação com a SQS**
+
 No caso de comandos que requerem processamento posterior, a mensagem é enviada à SQS.
 Resposta ao Cliente
 Após o processamento pela Lambda, o API Gateway retorna a resposta ao cliente.

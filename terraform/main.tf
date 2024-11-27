@@ -1,6 +1,6 @@
 
 resource "aws_api_gateway_rest_api" "query_api" {
-  name        = var.api_gateway_name
+  name        = var.api_gateway
   description = "API para consultas"
 }
 

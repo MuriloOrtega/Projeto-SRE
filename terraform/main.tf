@@ -1,15 +1,13 @@
-# API Gateway para consultas síncronas
+
 resource "aws_api_gateway_rest_api" "query_api" {
   name        = var.api_gateway_name
   description = "API para consultas"
 }
 
-# Fila SQS para comandos assíncronos
 resource "aws_sqs_queue" "command_queue" {
   name = var.queue_name
 }
 
-# Função Lambda para consulta
 resource "aws_lambda_function" "query_lambda" {
   function_name = "queryLambda"
   runtime       = var.lambda_runtime
@@ -19,7 +17,6 @@ resource "aws_lambda_function" "query_lambda" {
   role          = aws_iam_role.lambda_exec_role.arn
 }
 
-# Função Lambda para comandos
 resource "aws_lambda_function" "command_lambda" {
   function_name = "commandLambda"
   runtime       = var.lambda_runtime
@@ -29,7 +26,6 @@ resource "aws_lambda_function" "command_lambda" {
   role          = aws_iam_role.lambda_exec_role.arn
 }
 
-# Role do IAM para as funções Lambda
 resource "aws_iam_role" "lambda_exec_role" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -45,7 +41,6 @@ resource "aws_iam_role" "lambda_exec_role" {
   })
 }
 
-# Política do IAM para permitir que Lambda acesse SQS e CloudWatch (caso necessário)
 resource "aws_iam_policy" "lambda_sqs_cloudwatch_policy" {
   name        = "lambda_sqs_cloudwatch_policy"
   description = "Permissões para Lambda acessar SQS e CloudWatch"
@@ -66,7 +61,6 @@ resource "aws_iam_policy" "lambda_sqs_cloudwatch_policy" {
   })
 }
 
-# Anexando a política à Role do Lambda
 resource "aws_iam_role_policy_attachment" "lambda_sqs_cloudwatch_attachment" {
   policy_arn = aws_iam_policy.lambda_sqs_cloudwatch_policy.arn
   role       = aws_iam_role.lambda_exec_role.name
